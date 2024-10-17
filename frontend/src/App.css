@@ -1,0 +1,15 @@
+/* Light mode placeholder */
+.light-mode-placeholder::placeholder {
+    color: #6c757d; /* Light grey for light mode */
+}
+
+/* Drk mode placeholder */
+.dark-mode-placeholder::placeholder {
+    color: #ffffff; /* White for dark mode */
+}
+
+/* Custom checkbox when checked */
+.form-check-input:checked {
+    background-color: #F9A804;
+    border-color: #F9A804;
+}
