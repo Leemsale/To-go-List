@@ -21,6 +21,7 @@ function App() {
         setTogos(response.data); // Update state with fetched togos
       } catch (error) {
         console.error("Error fetching togos:", error);
+        console.log("Backend URL: ", backendUrl);
       }
     }
     fetchTogos(); // Call the function to fetch togos when the component mounts
