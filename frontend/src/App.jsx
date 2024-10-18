@@ -8,10 +8,11 @@ import Footer from "./Footer";
 function App() {
   const [togos, setTogos] = useState([]); // state to store list of togos
   const [isDarkMode, setIsDarkMode] = useState(false); // State to track dark mode
-  const backendUrl = process.env.NODE_ENV === 'production' 
-  ? process.env.REACT_APP_BACKEND_URL 
+  const backendUrl = import.meta.env.MODE === 'production' 
+  ? import.meta.env.VITE_APP_BACKEND_URL 
   : 'http://localhost:4000';
-
+  console.log("Backend URL: ", backendUrl);
+  // const backendUrl = import.meta.env.VITE_APP_BACKEND_URL || 'http://localhost:4000';
   
   useEffect(() => {
     async function fetchTogos() {
@@ -21,7 +22,6 @@ function App() {
         setTogos(response.data); // Update state with fetched togos
       } catch (error) {
         console.error("Error fetching togos:", error);
-        console.log("Backend URL: ", backendUrl);
       }
     }
     fetchTogos(); // Call the function to fetch togos when the component mounts

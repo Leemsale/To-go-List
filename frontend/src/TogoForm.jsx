@@ -3,8 +3,8 @@ import axios from "axios";
 
 function TogoForm({ onAdd, isDarkMode }) {
   const [item, setItem] = useState(""); // State to store the input value
-  const backendUrl = process.env.NODE_ENV === 'production' 
-    ? process.env.REACT_APP_BACKEND_URL 
+  const backendUrl = import.meta.env.MODE === 'production' 
+    ? import.meta.env.VITE_APP_BACKEND_URL
     : 'http://localhost:4000';
 
 
