@@ -4,7 +4,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import SaveIcon from "@mui/icons-material/Save";
 import { Fab } from "@mui/material";
 
-function TogoItem({ togo, onDelete, onEdit, onToggle, isDarkMode }) {
+function TogoItem({ togo, onDelete, onEdit, onToggle, isDarkMode, isMobile }) {
   const [isEditing, setIsEditing] = useState(false); // State to track editing
   const [newText, setNewText] = useState(togo.text); // State for the new text
 
@@ -37,6 +37,10 @@ function TogoItem({ togo, onDelete, onEdit, onToggle, isDarkMode }) {
       className={`list-group-item ${
         isDarkMode ? "bg-dark text-white" : "bg-light text-dark"
       }`}
+      style={{
+        fontsize: isMobile ? "12px" : "16px", // Adjust font size for mobile
+        padding: isMobile ? "5px" : "10px",
+      }}
     >
       {isEditing ? (
         <div className="">
@@ -49,6 +53,9 @@ function TogoItem({ togo, onDelete, onEdit, onToggle, isDarkMode }) {
               value={newText}
               onChange={handleChange}
               required
+              style={{ width: isMobile ? "100%" : "80%",
+                fontsize: isMobile ? "12px" : "16px",
+              }}
             />
             <Fab
               type="submit"
@@ -63,7 +70,7 @@ function TogoItem({ togo, onDelete, onEdit, onToggle, isDarkMode }) {
               size="small"
               title="Save" // Tooltip on hover
             >
-              <SaveIcon />
+              <SaveIcon style={{ fontSize: isMobile ? "20px" : "25px" }}/>
             </Fab>
           </form>
         </div>
@@ -76,6 +83,10 @@ function TogoItem({ togo, onDelete, onEdit, onToggle, isDarkMode }) {
                 checked={togo.completed}
                 onChange={() => onToggle(togo.id)}
                 className="form-check-input me-2"
+                style={{ 
+                  width: isMobile ? "16px" : "20px", 
+                  height: isMobile ? "16px" : "20px",
+                }}
               />
               {/* Apply conditional styling to the text based on completion status */}
               <span
@@ -86,13 +97,18 @@ function TogoItem({ togo, onDelete, onEdit, onToggle, isDarkMode }) {
                     : isDarkMode
                     ? "white"
                     : "black",
+                    fontSize: isMobile ? "12px" : "16px",
                 }}
               >
                 {togo.text}
               </span>{" "}
               {/* Display togo text */}
             </div>
-            <div>
+            <div className="d-flex justify-content-between"
+                 style={{
+                     gap: isMobile ? "0px" : "8px", // Adjust spacing between buttons
+                    padding: isMobile ? "0px" : "5px", // Adjust padding
+                 }}>
               {/* <button onClick={handleEdit} className="btn me-2" style={{ backgroundColor: "#6CBEC7"}}>
                 Edit
               </button> */}
@@ -109,7 +125,7 @@ function TogoItem({ togo, onDelete, onEdit, onToggle, isDarkMode }) {
                 size="small"
                 title="Edit" // Tooltip on hover
               >
-                <EditIcon style={{ fontSize: "25px" }} />
+                <EditIcon style={{ fontSize: isMobile ? "20px" : "25px" }} />
               </Fab>
               <Fab
                 onClick={handleDeleteClick}
@@ -123,7 +139,7 @@ function TogoItem({ togo, onDelete, onEdit, onToggle, isDarkMode }) {
                 size="small"
                 title="Delete" //Tooltip on hover
               >
-                <DeleteIcon />
+                <DeleteIcon style={{ fontSize: isMobile ? "20px" : "25px" }}/>
               </Fab>
               {/* <button
                 onClick={handleDeleteClick} // Use the delete click handler

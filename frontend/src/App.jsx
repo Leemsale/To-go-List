@@ -8,12 +8,20 @@ import Footer from "./Footer";
 function App() {
   const [togos, setTogos] = useState([]); // state to store list of togos
   const [isDarkMode, setIsDarkMode] = useState(false); // State to track dark mode
+  const [isMobile, setIsMobile] = useState(window.innerWidth <600);
+
   const backendUrl = import.meta.env.MODE === 'production' 
   ? import.meta.env.VITE_APP_BACKEND_URL 
   : 'http://localhost:4000';
   console.log("Backend URL: ", backendUrl);
   // const backendUrl = import.meta.env.VITE_APP_BACKEND_URL || 'http://localhost:4000';
   
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 600);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   useEffect(() => {
     async function fetchTogos() {
       try {
@@ -94,19 +102,20 @@ function App() {
         backgroundPosition: "center",
         height: "100vh",
         width: "100vw",
+        padding: isMobile ? "10px" : "20px", // Adjust padding for mobile
       }}
       className={`d-flex mx-auto position-relative flex-column justify-content-center align-items-center ${
         isDarkMode ? "bg-dark text text-white" : "bg-white  text-dark"
       }`}
     >
-      <div className="d-flex w-75 justify-content-between">
+      <div className="d-flex w-75 justify-content-between" style={{ width: isMobile ? "90%" : "75%" }}>
         <div></div>
         {/* <h1 className="my-auto">My To-go List</h1> */}
         <img
           className="mb-1 mt-3"
           src="/images/togo_logo.png"
           alt="Logo"
-          style={{ width: "350px" }}
+          style={{ width: isMobile ? "180px" : "350px" }} // Responsive logo
         />
         <button
           onClick={toggleDarkMode}
@@ -119,17 +128,19 @@ function App() {
         </button>
       </div>
       <div
-        className={`w-75  rounded bg-light border shadow p-4 ${
+        className={`w-75  rounded bg-light border shadow ${
           isDarkMode ? "bg-dark text-white" : "bg-light text-dark"
         }`}
+        style={{ padding: isMobile ? "10px" : "20px"}}
       >
-        <TogoForm onAdd={onAdd} isDarkMode={isDarkMode} />
+        <TogoForm onAdd={onAdd} isDarkMode={isDarkMode} isMobile={isMobile}/>
         <TogoList
           togos={togos}
           onDelete={handleDelete}
           onEdit={handleEdit}
           onToggle={handleToggle}
           isDarkMode={isDarkMode}
+          isMobile={isMobile}
         />
       </div>
        <Footer /> {/* Add Footer at the bottom */}

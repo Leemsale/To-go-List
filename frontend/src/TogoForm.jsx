@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-function TogoForm({ onAdd, isDarkMode }) {
+function TogoForm({ onAdd, isDarkMode, isMobile}) {
   const [item, setItem] = useState(""); // State to store the input value
   const backendUrl = import.meta.env.MODE === 'production' 
     ? import.meta.env.VITE_APP_BACKEND_URL
@@ -33,7 +33,10 @@ function TogoForm({ onAdd, isDarkMode }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="row gy-2 gx-4 justify-content-center mb-3"
+      className="row gy-2 gx-4 justify-content-center "
+      style={{ padding: isMobile ? "5px" : "10px",
+        marginBottom: isMobile ? "2px" : "4px",
+      }}
     >
       <div className="col-auto">
         <input
@@ -42,10 +45,14 @@ function TogoForm({ onAdd, isDarkMode }) {
               ? "bg-dark text-white border-white dark-mode-placeholder"
               : "bg-light text-dark light-mode-placeholder"
           }`}
+          style={{
+            width: isMobile ? "100%" : "300px",
+            fontSize: isMobile ? "12px" : "16px",
+          }}
           onChange={handleChange} // Update input value on change
           type="text"
           name="item"
-          placeholder="Add To-visit destination" // Placeholder text
+          placeholder= "Add To-visit destination" // Placeholder text
           value={item} // Controlled input
           required
         />
@@ -53,7 +60,10 @@ function TogoForm({ onAdd, isDarkMode }) {
       <button
         type="submit"
         className="btn col-3"
-        style={{ backgroundColor: "#F9A804" }}
+        style={{ backgroundColor: "#F9A804", 
+          width: isMobile ? "30%" : "auto",
+          fontSize: isMobile ? "10px" : "16px"
+        }}
       >
         Add Destination
       </button>
